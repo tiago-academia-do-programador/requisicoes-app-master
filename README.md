@@ -4,7 +4,7 @@
 
 Crie a pasta <strong>environments</strong> dentro de <strong>src</strong> e inclua o arquivo <strong>environment.ts</strong> com a sua chave de aplicação do firebase.
 
-O arquivo <strong>environment.ts</strong> deve exportar uma constante contendo as informações que obtidas nas configurações de projeto do Console do Firebase.
+O arquivo <strong>environment.ts</strong> deve exportar uma constante contendo as informações que são obtidas nas configurações de projeto do Console do Firebase.
 
 
 ```typescript
