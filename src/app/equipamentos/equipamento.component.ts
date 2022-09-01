@@ -34,7 +34,7 @@ export class EquipamentoComponent implements OnInit {
   }
 
   get tituloModal(): string {
-    return this.id?.value ? "Atualizar" : "Cadastro";
+    return this.id?.value ? "Atualização" : "Cadastro";
   }
 
   get id(): AbstractControl | null {

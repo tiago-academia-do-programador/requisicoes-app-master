@@ -23,6 +23,7 @@ import ptBr from '@angular/common/locales/pt';
 import { registerLocaleData } from '@angular/common';
 import { LOCALE_ID, DEFAULT_CURRENCY_CODE } from '@angular/core';
 import { ToastrModule } from 'ngx-toastr';
+import { FuncionarioModule } from './funcionarios/funcionario.module';
 
 registerLocaleData(ptBr);
 
@@ -47,7 +48,8 @@ registerLocaleData(ptBr);
     }),
 
     DepartamentoModule,
-    EquipamentoModule
+    EquipamentoModule,
+    FuncionarioModule
   ],
   providers: [
     AuthenticationService,
