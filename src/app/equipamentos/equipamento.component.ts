@@ -1,8 +1,9 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
+import { dataFuturaValidator } from '../shared/validators/data-futura.validator';
 import { Equipamento } from './models/equipamento.model';
 import { EquipamentoService } from './services/equipamento.service';
 
@@ -24,10 +25,10 @@ export class EquipamentoComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       id: new FormControl(""),
-      numeroSerie: new FormControl(""),
-      nome: new FormControl(""),
-      precoAquisicao: new FormControl(""),
-      dataFabricacao: new FormControl(""),
+      numeroSerie: new FormControl("", [Validators.required]),
+      nome: new FormControl("", [Validators.required, Validators.minLength(3)]),
+      precoAquisicao: new FormControl("", [Validators.required, Validators.min(0)]),
+      dataFabricacao: new FormControl("", [Validators.required, dataFuturaValidator()]),
     });
 
     this.equipamentos$ = this.equipamentoService.selecionarTodos();
@@ -41,6 +42,22 @@ export class EquipamentoComponent implements OnInit {
     return this.form.get("id");
   }
 
+  get numeroSerie(): AbstractControl | null {
+    return this.form.get("numeroSerie");
+  }
+
+  get nome(): AbstractControl | null {
+    return this.form.get("nome");
+  }
+
+  get precoAquisicao(): AbstractControl | null {
+    return this.form.get("precoAquisicao");
+  }
+
+  get dataFabricacao(): AbstractControl | null {
+    return this.form.get("dataFabricacao");
+  }
+
   public async gravar(modal: TemplateRef<any>, equipamento?: Equipamento) {
     this.form.reset();
 
@@ -50,12 +67,14 @@ export class EquipamentoComponent implements OnInit {
     try {
       await this.modalService.open(modal).result;
 
-      if (!equipamento)
-        await this.equipamentoService.inserir(this.form.value)
-      else
-        await this.equipamentoService.editar(this.form.value);
+      if (this.form.dirty && this.form.valid) {
+        if (!equipamento)
+          await this.equipamentoService.inserir(this.form.value)
+        else
+          await this.equipamentoService.editar(this.form.value);
 
-      this.toastrService.success(`O equipamento foi salvo com sucesso!`, "Cadastro de Equipamentos");
+        this.toastrService.success(`O equipamento foi salvo com sucesso!`, "Cadastro de Equipamentos");
+      }
     } catch (error) {
       if (error != "fechar" && error != "0" && error != "1")
         this.toastrService.error("Houve um erro ao salvar o equipamento. Tente novamente.", "Cadastro de Equipamentos")
