@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl, AbstractControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, AbstractControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
@@ -39,13 +39,13 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.form = this.fb.group({
       id: new FormControl(""),
-      descricao: new FormControl(""),
+      descricao: new FormControl("", [Validators.required, Validators.minLength(6)]),
       dataAbertura: new FormControl(""),
 
       funcionarioId: new FormControl(""),
       funcionario: new FormControl(""),
 
-      departamentoId: new FormControl(""),
+      departamentoId: new FormControl("", [Validators.required]),
       departamento: new FormControl(""),
 
       equipamentoId: new FormControl(""),
@@ -77,6 +77,14 @@ export class RequisicoesFuncionarioComponent implements OnInit, OnDestroy {
 
   get id(): AbstractControl | null {
     return this.form.get("id");
+  }
+
+  get departamentoId() {
+    return this.form.get("departamentoId");
+  }
+
+  get descricao() {
+    return this.form.get("descricao");
   }
 
   public async gravar(modal: TemplateRef<any>, requisicao?: Requisicao) {

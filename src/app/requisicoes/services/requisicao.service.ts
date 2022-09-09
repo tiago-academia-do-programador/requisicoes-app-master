@@ -59,7 +59,8 @@ export class RequisicaoService {
                 .doc(req.equipamentoId)
                 .valueChanges()
                 .subscribe(e => req.equipamento = e);
-            }
+            } else
+              req.equipamento = undefined;
           });
 
           return requisicoes;
