@@ -70,15 +70,6 @@
     <div class="modal-body">
       <div class="form-group mb-3 position-relative">
         <label for="departamentoId" class="form-label">Departamento destino</label>
-        <!-- <select
-          formControlName="departamentoId"
-          [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
-          class="form-control w-75">
-          <option
-          c
-            *ngFor="let departamento of (departamentos$ | async)"
-            [value]="departamento.id">{{ departamento?.nome }}</option>
-        </select> -->
         <ng-select
           [ngClass]="(departamentoId?.touched && departamentoId?.invalid) ? 'is-invalid' : ''"
           placeholder="Selecione um departamento"
