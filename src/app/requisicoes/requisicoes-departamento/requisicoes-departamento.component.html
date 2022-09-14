@@ -38,6 +38,7 @@
               <td class="text-center">{{requisicao.ultimaAtualizacao.toDate() | date: 'dd/MM/yyyy HH:mm'}}</td>
               <td class="text-center d-grid d-md-block">
                 <button
+                  [disabled]="requisicao.status === 'Finalizada'"
                   (click)="gravar(modal, requisicao)"
                   type="button"
                   class="btn btn-primary me-0 me-md-1 mb-1 mb-md-auto">
